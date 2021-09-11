@@ -1,32 +1,19 @@
 import React from 'react';
-
-
-
-const CountryList = ({country,searchName}) =>{
-
+const CountryList = ({countries}) =>{
 
    return(
-    <table>
-     <tbody> 
-    <tr>
-                     <th>name</th>
-                     <th>Flag</th>
-                     <th>Country Native Name</th>
-                     <th> Border</th>
-                     <th>Languages</th>
-    </tr>
-       
+       <table>
+          <tbody> 
+               <tr>
+                 <th>name</th>
+                 <th>Flag</th>
+                 <th>Country Native Name</th>
+                 <th> Border</th>
+                 <th>Languages</th>
+               </tr>     
 
 {
-         country.filter((val) =>{
-           if(searchName === ''){
-             return val;
-           }else if(val.name.toLowerCase().includes(searchName.toLowerCase())){
-             return val;
-           }
-           return false;
-            
-         }).map((curElem,index) => (
+         countries.map((curElem,index) => (
            
                 <tr key={index}>
                   <td>

@@ -5,27 +5,39 @@ import SearchCountry from './components/SearchCountry';
 
 
 function App() {
-  const [country,setCountry] = useState([]);
+  const [countries,setCountries] = useState([]);
   const [searchName,setSearchName] = useState('');
 
 
-   const fetchData = async() => {
+    const fetchData = async() => {
     const response = await fetch('https://restcountries.eu/rest/v2/all');
+    if(!response.ok){
+      throw new Error('Something went Wrong');
+    }
     const data = await response.json();
-    setCountry(data);
+    setCountries(data);
     
   };
+  
  useEffect( () => {
-  fetchData();      
-  },[country]);
+   try{
+     fetchData();
+   }catch(error){
+    console.log(error.message);
+   }      
+  },[]);
 
+
+useEffect(() => {
+    setCountries(countries.filter(item => item.name.toLowerCase().indexOf(searchName.toLowerCase()) > -1));
+ },[searchName]);
   
 
  
   return (
     <>
     <SearchCountry setSearchName={setSearchName}/>
-    <CountryList country={country} searchName={searchName}/>
+    <CountryList countries={countries}/>
     </>
   );
 }
